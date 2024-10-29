@@ -40,7 +40,7 @@
     </scm>
 
     <properties>
-        <liquibase.version>4.29.2</liquibase.version>
+        <liquibase.version>0-SNAPSHOT</liquibase.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <sonar.organization>liquibase</sonar.organization>
