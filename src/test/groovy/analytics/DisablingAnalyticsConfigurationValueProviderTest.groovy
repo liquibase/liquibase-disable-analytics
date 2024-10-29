@@ -1,4 +1,4 @@
-package org.liquibase.analytics
+package analytics
 
 import liquibase.Scope
 import liquibase.analytics.configuration.AnalyticsArgs
