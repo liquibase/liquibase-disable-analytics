@@ -1,7 +1,6 @@
 package org.liquibase.analytics;
 
 import liquibase.Scope;
-import liquibase.analytics.configuration.AnalyticsArgs;
 import liquibase.command.CommandScope;
 import liquibase.configuration.ConfigurationValueProvider;
 import liquibase.configuration.ProvidedValue;
@@ -15,7 +14,9 @@ public class DisablingAnalyticsConfigurationValueProvider implements Configurati
 
     @Override
     public ProvidedValue getProvidedValue(String... keyAndAliases) {
-        if (keyAndAliases[0].equals(AnalyticsArgs.ENABLED.getKey())) {
+        // We are purposefully hardcoding the string here instead of referencing the key directly so this extension
+        // can be released prior to doing a Liquibase release.
+        if (keyAndAliases[0].equals("liquibase.analytics.enabled")) {
             String message = "Analytics is being forcibly disabled because the liquibase-disable-analytics extension is " +
                     "on the classpath. If this is not your intention, remove the extension. If you do intend to disable " +
                     "analytics, note that you can disable analytics with the --analytics-enabled=false argument, or associated " +
