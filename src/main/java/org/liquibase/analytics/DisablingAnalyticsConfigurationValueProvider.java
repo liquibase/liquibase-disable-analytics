@@ -1,6 +1,7 @@
 package org.liquibase.analytics;
 
 import liquibase.Scope;
+import liquibase.analytics.configuration.AnalyticsArgs;
 import liquibase.command.CommandScope;
 import liquibase.configuration.ConfigurationValueProvider;
 import liquibase.configuration.ProvidedValue;
