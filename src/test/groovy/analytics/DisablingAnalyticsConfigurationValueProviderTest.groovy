@@ -1,6 +1,8 @@
 package analytics
 
 import liquibase.Scope
+import liquibase.analytics.AnalyticsFactory
+import liquibase.analytics.NoOpAnalyticsListener
 import liquibase.analytics.configuration.AnalyticsArgs
 import spock.lang.Specification
 
@@ -12,11 +14,17 @@ class DisablingAnalyticsConfigurationValueProviderTest extends Specification {
         scopeVars.put(AnalyticsArgs.ENABLED.getKey(), true)
         scopeVars.put(AnalyticsArgs.DEV_OVERRIDE.getKey(), true)
         scopeVars.put(AnalyticsArgs.CONFIG_ENDPOINT_URL.getKey(), "https://config.liquibase.net/analytics.yaml")
+        def analyticsFactory = Scope.getCurrentScope().getSingleton(AnalyticsFactory.class)
+        def listener = analyticsFactory.getListener()
+        boolean isNoOpListener = listener instanceof NoOpAnalyticsListener
         boolean enabled = Scope.child(scopeVars, () -> {
-            return AnalyticsArgs.isAnalyticsEnabled()
+            return listener.isEnabled()
         } as Scope.ScopedRunnerWithReturn)
 
         then:
-        !enabled
+        // When AnalyticsArgs.ENABLED = false LiquibaseAnalyticsListener gets -1 priority
+        // and replaces its functionality with the NoOpAnalyticsListener.
+        // So check that we have a no op listener and that it is enabled.
+        isNoOpListener && enabled
     }
 }
