@@ -49,8 +49,11 @@
     <sonar.tests>src/test</sonar.tests>
   </properties>
   <dependencies>
-    <!-- Override the parent's inherited liquibase-core, since liquibase-core ${liquibase.version}
-         is not published on Maven Central. liquibase-secure-starter (below) is the runtime target. -->
+    <!-- liquibase-core is not actually needed: its classes are shaded into liquibase-commercial
+         (pulled in by liquibase-secure-starter below). It is only redeclared here to override the
+         parent POM's inherited liquibase-core:${liquibase.version} reference, since
+         liquibase-core 5.1.x is not published on Maven Central. Scope is provided so it is not
+         packaged. Remove once liquibase-parent-pom no longer auto-includes liquibase-core. -->
     <dependency>
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
