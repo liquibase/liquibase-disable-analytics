@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.liquibase</groupId>
     <artifactId>liquibase-parent-pom</artifactId>
-    <version>0.5.6</version>
+    <version>1.0.2</version>
     <!-- Replace with the desired version -->
   </parent>
   <groupId>org.liquibase.ext</groupId>
   <artifactId>liquibase-disable-analytics</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>5.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Liquibase Disable Analytics Extension</name>
   <description>This extension will disable analytics on any Liquibase installation.</description>
@@ -36,9 +36,8 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <liquibase.version>master-SNAPSHOT</liquibase.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <liquibase.version>5.1.0</liquibase.version>
+    <liquibase-oss.version>5.0.2</liquibase-oss.version>
     <sonar.organization>liquibase</sonar.organization>
     <sonar.projectKey>${sonar.organization}_${project.artifactId}</sonar.projectKey>
     <sonar.projectName>${project.name}</sonar.projectName>
@@ -50,15 +49,27 @@
     <sonar.tests>src/test</sonar.tests>
   </properties>
   <dependencies>
+    <!-- liquibase-core is not actually needed: its classes are shaded into liquibase-commercial
+         (pulled in by liquibase-secure-starter below). It is only redeclared here to override the
+         parent POM's inherited liquibase-core:${liquibase.version} reference, since
+         liquibase-core 5.1.x is not published on Maven Central. Scope is provided so it is not
+         packaged. Remove once liquibase-parent-pom no longer auto-includes liquibase-core. -->
     <dependency>
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
+      <version>${liquibase-oss.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liquibase</groupId>
+      <artifactId>liquibase-secure-starter</artifactId>
       <version>${liquibase.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>2.0.16</version>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
