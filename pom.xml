@@ -36,7 +36,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <liquibase.version>5.1.0</liquibase.version>
+    <liquibase.version>5.2.1</liquibase.version>
     <liquibase-oss.version>5.0.3</liquibase-oss.version>
     <sonar.organization>liquibase</sonar.organization>
     <sonar.projectKey>${sonar.organization}_${project.artifactId}</sonar.projectKey>
